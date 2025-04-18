@@ -59,7 +59,7 @@
   <input type="text" id="nameInput" placeholder="Enter your name" />
   <button onclick="getPrompt()" id="getPromptBtn">Get My Prompt</button>
   <div class="result" id="resultBox" style="display: none;"></div>
-  <audio id="popSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6fa926bd36.mp3?filename=pop-94319.mp3"></audio>
+  <audio id="popSound" src="https://cnglz.github.io/dress-code-app/confetti-pop.wav"></audio>
 
   <script>
     function getPrompt() {
@@ -78,7 +78,7 @@
           // Play sound
           const sound = document.getElementById("popSound");
           sound.currentTime = 0;
-          sound.play().catch(() => {}); // Ignore autoplay errors
+          sound.play().catch(() => {});
 
           // Trigger confetti burst
           setTimeout(() => {
