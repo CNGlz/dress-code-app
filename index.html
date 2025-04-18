@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Are You Doing Here?</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+      color: #333;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+    input {
+      padding: 10px;
+      font-size: 1em;
+      width: 250px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #800040;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    button:disabled {
+      background-color: #aaa;
+    }
+    .result {
+      font-size: 1.2em;
+      font-style: italic;
+      padding: 20px;
+      max-width: 300px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>What Are You Doing Here?</h1>
+  <input type="text" id="nameInput" placeholder="Enter your name" />
+  <button onclick="getPrompt()" id="getPromptBtn">Get My Prompt</button>
+  <div class="result" id="resultBox" style="display: none;"></div>
+
+  <script>
+    const prompts = [
+      "You just got kicked out of a bar at 2AM",
+      "You're a substitute teacher who gave up halfway through the day",
+      "You thought this was a Zoom meeting",
+      "You’re in your villain arc",
+      "You’re going to the airport",
+      "You just woke up and remembered you had plans",
+      "You thought this was a pajama party",
+      "You’re a background dancer for a 2004 music video",
+      "You’re the fun aunt/uncle who showed up 3 margaritas deep",
+      "You thought you were going to a farmer’s market",
+      "You went to Las Vegas but gambled all your money",
+      "You’re trying to get adopted by a rich family at this event",
+      "You came straight from a cousin’s quinceañera after-party",
+      "You’re dressed like your therapist told you to “express yourself”",
+      "You dressed in the dark during a power outage",
+      "You got dressed by your mom",
+      "You're dressed like you just ran a marathon",
+      "You were in a wedding party but got uninvited last minute",
+      "You came straight from mass",
+      "You were going to a rave but somehow ended up here"
+    ];
+
+    const used = new Set();
+
+    function getPrompt() {
+      const name = document.getElementById("nameInput").value.trim();
+      if (!name) return alert("Please enter your name!");
+
+      let available = prompts.filter(p => !used.has(p));
+      if (available.length === 0) return alert("All prompts have been assigned!");
+
+      const prompt = available[Math.floor(Math.random() * available.length)];
+      used.add(prompt);
+
+      document.getElementById("resultBox").innerText = `${name}, your dress code prompt is:\n\n"${prompt}"`;
+      document.getElementById("resultBox").style.display = "block";
+      document.getElementById("getPromptBtn").disabled = true;
+    }
+  </script>
+</body>
+</html>
