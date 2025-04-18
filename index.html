@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>What Are You Doing Here?</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -58,6 +59,7 @@
   <input type="text" id="nameInput" placeholder="Enter your name" />
   <button onclick="getPrompt()" id="getPromptBtn">Get My Prompt</button>
   <div class="result" id="resultBox" style="display: none;"></div>
+  <audio id="popSound" src="https://www.myinstants.com/media/sounds/confetti-pop.mp3"></audio>
 
   <script>
     function getPrompt() {
@@ -72,6 +74,18 @@
           document.getElementById("resultBox").innerText = `${name}, your dress code prompt is:\n\n"${prompt}"`;
           document.getElementById("resultBox").style.display = "block";
           document.getElementById("getPromptBtn").disabled = true;
+
+          // Play sound
+          const sound = document.getElementById("popSound");
+          sound.currentTime = 0;
+          sound.play();
+
+          // Launch confetti
+          confetti({
+            particleCount: 200,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
         })
         .catch(error => {
           alert("Something went wrong. Please try again later.");
