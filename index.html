@@ -98,6 +98,10 @@
       document.getElementById("resultBox").innerText = `${name}, your dress code prompt is:\n\n"${prompt}"`;
       document.getElementById("resultBox").style.display = "block";
       document.getElementById("getPromptBtn").disabled = true;
+
+      // Submit to Google Form
+      const formURL = `https://docs.google.com/forms/d/e/1FAIpQLSeeB_Y-j3ScFqAthpkdDCoCcGkOK3Bzc10EQaYDYaear-NYgA/formResponse?entry.1669019180=${encodeURIComponent(name)}&entry.647267005=${encodeURIComponent(prompt)}`;
+      fetch(formURL, { method: "POST", mode: "no-cors" });
     }
   </script>
 </body>
