@@ -1,4 +1,3 @@
-# dress-code-app
 # 🎭 Dress Code Generator
 
 Welcome to the most chaotic and fabulous way to figure out what you're wearing.
