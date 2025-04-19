@@ -87,16 +87,26 @@
         .then(response => response.text())
         .then(prompt => {
   const resultBox = document.getElementById("resultBox");
-  console.log("Fetched prompt:", prompt); // Debug log
 
-  resultBox.innerHTML = `
-    <p style="color: green;">🟢 SUCCESS: Prompt fetched</p>
-    <p>${name}, your dress code prompt is:</p>
-    <p style="font-style: italic;">"${prompt}"</p>
-    <p class="fade-in" style="margin-top: 15px; font-weight: bold; background: yellow; padding: 10px;">
-      🟡 TEST: This is the screenshot reminder!
-    </p>
-  `;
+  resultBox.innerHTML = name + ', your dress code prompt is:<br><br>"' + prompt + '"<br><br><strong>Don\'t forget to screenshot your result, just in case you forget your dress code 😉</strong>';
+
+  resultBox.style.display = "block";
+  document.getElementById("getPromptBtn").disabled = true;
+
+  const sound = document.getElementById("popSound");
+  sound.currentTime = 0;
+  sound.play().catch(() => {});
+
+  setTimeout(() => {
+    confetti({
+      particleCount: 120,
+      spread: 70,
+      origin: { y: 0.6 },
+      zIndex: 999
+    });
+  }, 100);
+})
+
   resultBox.style.display = "block";
   document.getElementById("getPromptBtn").disabled = true;
 
