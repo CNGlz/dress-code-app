@@ -74,9 +74,7 @@
 
       fetch(url)
         .then(response => {
-          if (!response.ok) {
-            throw new Error(`Server returned ${response.status}`);
-          }
+          if (!response.ok) throw new Error(`Server returned ${response.status}`);
           return response.text();
         })
         .then(prompt => {
@@ -119,8 +117,8 @@
           }, 100);
         })
         .catch(error => {
-          console.error("ERROR:", error);
           alert("Oops! Something went wrong. Please try again.");
+          console.error(error);
         });
     }
   </script>
