@@ -73,25 +73,29 @@
       const url = `https://script.google.com/macros/s/AKfycbwqADwztSdwXMCvUM26-uxSK5-A7nY3VAM3TBZtFRaZiCKK2LhCz5QZwwuRFkiZAuiMbA/exec?name=${encodeURIComponent(name)}`;
 
       fetch(url)
-        .then(response => response.text())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Server returned ${response.status}`);
+          }
+          return response.text();
+        })
         .then(prompt => {
-          const resultBox = document.getElementById("resultBox");
+          if (!prompt || prompt.trim() === "") {
+            throw new Error("No prompt returned from server.");
+          }
 
-          // Clear any existing content
+          const resultBox = document.getElementById("resultBox");
           resultBox.innerHTML = '';
 
-          // Name & prompt label
           const nameText = document.createElement('p');
           nameText.textContent = `${name}, your dress code prompt is:`;
           resultBox.appendChild(nameText);
 
-          // Actual prompt
           const promptText = document.createElement('p');
           promptText.style.fontStyle = 'italic';
           promptText.textContent = `"${prompt}"`;
           resultBox.appendChild(promptText);
 
-          // Reminder message
           const reminder = document.createElement('p');
           reminder.style.marginTop = '15px';
           reminder.style.fontWeight = 'bold';
@@ -101,12 +105,10 @@
           resultBox.style.display = "block";
           document.getElementById("getPromptBtn").disabled = true;
 
-          // Play pop sound
           const sound = document.getElementById("popSound");
           sound.currentTime = 0;
           sound.play().catch(() => {});
 
-          // Confetti!
           setTimeout(() => {
             confetti({
               particleCount: 120,
@@ -117,8 +119,8 @@
           }, 100);
         })
         .catch(error => {
-          alert("Something went wrong. Please try again later.");
-          console.error(error);
+          console.error("ERROR:", error);
+          alert("Oops! Something went wrong. Please try again.");
         });
     }
   </script>
