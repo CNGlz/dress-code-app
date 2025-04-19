@@ -18,10 +18,12 @@
       color: #333;
       text-align: center;
     }
+
     h1 {
       font-size: 2.2em;
       margin-bottom: 10px;
     }
+
     input {
       padding: 10px;
       font-size: 1em;
@@ -30,6 +32,7 @@
       border-radius: 8px;
       border: 1px solid #ccc;
     }
+
     button {
       padding: 10px 20px;
       font-size: 1em;
@@ -40,17 +43,30 @@
       cursor: pointer;
       margin-bottom: 20px;
     }
+
     button:disabled {
       background-color: #aaa;
     }
+
     .result {
       font-size: 1.2em;
-      font-style: italic;
       padding: 20px;
       max-width: 300px;
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ✨ Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1.5s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -71,7 +87,12 @@
       fetch(url)
         .then(response => response.text())
         .then(prompt => {
-          document.getElementById("resultBox").innerText = `${name}, your dress code prompt is:\n\n"${prompt}"`;
+          document.getElementById("resultBox").innerHTML = `
+            <p>${name}, your dress code prompt is:</p>
+            <p style="font-style: italic;">"${prompt}"</p>
+            <p class="fade-in" style="margin-top: 15px; font-weight: bold;">
+              Don't forget to screenshot your result, just in case you forget your dress code 😉
+            </p>`;
           document.getElementById("resultBox").style.display = "block";
           document.getElementById("getPromptBtn").disabled = true;
 
@@ -80,7 +101,7 @@
           sound.currentTime = 0;
           sound.play().catch(() => {});
 
-          // Trigger confetti burst
+          // Trigger confetti
           setTimeout(() => {
             confetti({
               particleCount: 120,
