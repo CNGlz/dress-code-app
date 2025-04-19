@@ -57,7 +57,6 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    /* ✨ Fade-in animation */
     .fade-in {
       opacity: 0;
       animation: fadeIn 1.5s ease-in forwards;
@@ -87,16 +86,15 @@
       fetch(url)
         .then(response => response.text())
         .then(prompt => {
-          document.getElementById("resultBox").innerHTML = `
-            <div>
-              <p>${name}, your dress code prompt is:</p>
-              <p style="font-style: italic;">"${prompt}"</p>
-              <p class="fade-in" style="margin-top: 15px; font-weight: bold; text-align: center;">
-                Don't forget to screenshot your result, just in case you forget your dress code 😉
-              </p>
-            </div>
+          const resultBox = document.getElementById("resultBox");
+          resultBox.innerHTML = `
+            <p>${name}, your dress code prompt is:</p>
+            <p style="font-style: italic;">"${prompt}"</p>
+            <p class="fade-in" style="margin-top: 15px; font-weight: bold;">
+              Don't forget to screenshot your result, just in case you forget your dress code 😉
+            </p>
           `;
-          document.getElementById("resultBox").style.display = "block";
+          resultBox.style.display = "block";
           document.getElementById("getPromptBtn").disabled = true;
 
           // Play sound
@@ -104,7 +102,7 @@
           sound.currentTime = 0;
           sound.play().catch(() => {});
 
-          // Trigger confetti
+          // Confetti
           setTimeout(() => {
             confetti({
               particleCount: 120,
@@ -122,4 +120,3 @@
   </script>
 </body>
 </html>
-
