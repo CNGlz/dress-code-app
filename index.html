@@ -88,11 +88,14 @@
         .then(response => response.text())
         .then(prompt => {
           document.getElementById("resultBox").innerHTML = `
-            <p>${name}, your dress code prompt is:</p>
-            <p style="font-style: italic;">"${prompt}"</p>
-            <p class="fade-in" style="margin-top: 15px; font-weight: bold;">
-              Don't forget to screenshot your result, just in case you forget your dress code 😉
-            </p>`;
+            <div>
+              <p>${name}, your dress code prompt is:</p>
+              <p style="font-style: italic;">"${prompt}"</p>
+              <p class="fade-in" style="margin-top: 15px; font-weight: bold; text-align: center;">
+                Don't forget to screenshot your result, just in case you forget your dress code 😉
+              </p>
+            </div>
+          `;
           document.getElementById("resultBox").style.display = "block";
           document.getElementById("getPromptBtn").disabled = true;
 
@@ -119,3 +122,4 @@
   </script>
 </body>
 </html>
+
