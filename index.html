@@ -56,17 +56,6 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-
-    .fade-in {
-      opacity: 0;
-      animation: fadeIn 1.5s ease-in forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
   </style>
 </head>
 <body>
@@ -86,52 +75,38 @@
       fetch(url)
         .then(response => response.text())
         .then(prompt => {
-  const resultBox = document.getElementById("resultBox");
+          const resultBox = document.getElementById("resultBox");
 
-  resultBox.innerHTML = name + ', your dress code prompt is:<br><br>"' + prompt + '"<br><br><strong>Don\'t forget to screenshot your result, just in case you forget your dress code 😉</strong>';
+          // Clear any existing content
+          resultBox.innerHTML = '';
 
-  resultBox.style.display = "block";
-  document.getElementById("getPromptBtn").disabled = true;
+          // Name & prompt label
+          const nameText = document.createElement('p');
+          nameText.textContent = `${name}, your dress code prompt is:`;
+          resultBox.appendChild(nameText);
 
-  const sound = document.getElementById("popSound");
-  sound.currentTime = 0;
-  sound.play().catch(() => {});
+          // Actual prompt
+          const promptText = document.createElement('p');
+          promptText.style.fontStyle = 'italic';
+          promptText.textContent = `"${prompt}"`;
+          resultBox.appendChild(promptText);
 
-  setTimeout(() => {
-    confetti({
-      particleCount: 120,
-      spread: 70,
-      origin: { y: 0.6 },
-      zIndex: 999
-    });
-  }, 100);
-})
-
-  resultBox.style.display = "block";
-  document.getElementById("getPromptBtn").disabled = true;
-
-  const sound = document.getElementById("popSound");
-  sound.currentTime = 0;
-  sound.play().catch(() => {});
-  setTimeout(() => {
-    confetti({
-      particleCount: 120,
-      spread: 70,
-      origin: { y: 0.6 },
-      zIndex: 999
-    });
-  }, 100);
-})
+          // Reminder message
+          const reminder = document.createElement('p');
+          reminder.style.marginTop = '15px';
+          reminder.style.fontWeight = 'bold';
+          reminder.textContent = "Don't forget to screenshot your result, just in case you forget your dress code 😉";
+          resultBox.appendChild(reminder);
 
           resultBox.style.display = "block";
           document.getElementById("getPromptBtn").disabled = true;
 
-          // Play sound
+          // Play pop sound
           const sound = document.getElementById("popSound");
           sound.currentTime = 0;
           sound.play().catch(() => {});
 
-          // Confetti
+          // Confetti!
           setTimeout(() => {
             confetti({
               particleCount: 120,
