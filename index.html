@@ -44,10 +44,16 @@
       margin-bottom: 20px;
       position: relative;
       transition: background-color 0.3s ease;
+      min-height: 42px; /* ensures spinner stays visible */
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
     }
 
     button.loading {
-      color: transparent;
+      color: transparent !important;
       pointer-events: none;
     }
 
@@ -59,10 +65,11 @@
       width: 18px;
       height: 18px;
       margin: -9px 0 0 -9px;
-      border: 2px solid white;
-      border-top: 2px solid transparent;
       border-radius: 50%;
+      border: 2px solid white;
+      border-top-color: transparent;
       animation: spin 0.8s linear infinite;
+      z-index: 2;
     }
 
     @keyframes spin {
@@ -95,7 +102,7 @@
 
       if (!name) return alert("Please enter your name!");
 
-      // Spinner on
+      // Show spinner
       button.disabled = true;
       button.classList.add("loading");
 
@@ -142,7 +149,7 @@
             zIndex: 999
           });
 
-          // Reset button state
+          // Reset button
           button.classList.remove("loading");
           button.textContent = "Get My Prompt";
         })
