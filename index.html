@@ -42,10 +42,12 @@
       border-radius: 8px;
       cursor: pointer;
       margin-bottom: 20px;
+      transition: all 0.3s ease;
     }
 
     button:disabled {
       background-color: #aaa;
+      cursor: not-allowed;
     }
 
     .result {
@@ -57,19 +59,46 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    .wink {
-      display: inline-block;
-      animation: blink 2s infinite;
+    /* Spinner styles */
+    button.loading {
+      position: relative;
+      color: transparent !important;
+      pointer-events: none;
     }
 
-    @keyframes blink {
-      0%, 85%, 100% {
-        opacity: 1;
-        transform: scale(1);
+    button.loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      margin: -9px 0 0 -9px;
+      border-radius: 50%;
+      border: 2px solid white;
+      border-top-color: transparent;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
       }
-      90%, 95% {
-        opacity: 0;
-        transform: scale(0.8);
+    }
+
+    /* Blinking wink emoji */
+    .wink::before {
+      content: "😉";
+      animation: swapWink 2s infinite;
+      display: inline-block;
+    }
+
+    @keyframes swapWink {
+      0%, 90%, 100% {
+        content: "😉";
+      }
+      95% {
+        content: "😐";
       }
     }
   </style>
@@ -84,7 +113,13 @@
   <script>
     function getPrompt() {
       const name = document.getElementById("nameInput").value.trim();
+      const button = document.getElementById("getPromptBtn");
+
       if (!name) return alert("Please enter your name!");
+
+      // Show spinner immediately
+      button.disabled = true;
+      button.classList.add("loading");
 
       const url = `https://script.google.com/macros/s/AKfycbwqADwztSdwXMCvUM26-uxSK5-A7nY3VAM3TBZtFRaZiCKK2LhCz5QZwwuRFkiZAuiMbA/exec?name=${encodeURIComponent(name)}`;
 
@@ -113,28 +148,32 @@
           const reminder = document.createElement('p');
           reminder.style.marginTop = '15px';
           reminder.style.fontWeight = 'bold';
-          reminder.innerHTML = `Don't forget to screenshot your result, just in case you forget your dress code <span class="wink">😉</span>`;
+          reminder.innerHTML = `Don't forget to screenshot your result, just in case you forget your dress code <span class="wink"></span>`;
           resultBox.appendChild(reminder);
 
           resultBox.style.display = "block";
-          document.getElementById("getPromptBtn").disabled = true;
 
+          // Sound & confetti
           const sound = document.getElementById("popSound");
           sound.currentTime = 0;
           sound.play().catch(() => {});
+          confetti({
+            particleCount: 120,
+            spread: 70,
+            origin: { y: 0.6 },
+            zIndex: 999
+          });
 
-          setTimeout(() => {
-            confetti({
-              particleCount: 120,
-              spread: 70,
-              origin: { y: 0.6 },
-              zIndex: 999
-            });
-          }, 100);
+          // Reset button
+          button.classList.remove("loading");
+          button.textContent = "Get My Prompt";
         })
         .catch(error => {
           alert("Oops! Something went wrong. Please try again.");
           console.error(error);
+          button.disabled = false;
+          button.classList.remove("loading");
+          button.textContent = "Get My Prompt";
         });
     }
   </script>
