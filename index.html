@@ -42,27 +42,12 @@
       border-radius: 8px;
       cursor: pointer;
       margin-bottom: 20px;
-      transition: all 0.3s ease;
-    }
-
-    button:disabled {
-      background-color: #aaa;
-      cursor: not-allowed;
-    }
-
-    .result {
-      font-size: 1.2em;
-      padding: 20px;
-      max-width: 300px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    /* Spinner styles */
-    button.loading {
       position: relative;
-      color: transparent !important;
+      transition: background-color 0.3s ease;
+    }
+
+    button.loading {
+      color: transparent;
       pointer-events: none;
     }
 
@@ -74,9 +59,9 @@
       width: 18px;
       height: 18px;
       margin: -9px 0 0 -9px;
-      border-radius: 50%;
       border: 2px solid white;
-      border-top-color: transparent;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
 
@@ -86,20 +71,13 @@
       }
     }
 
-    /* Blinking wink emoji */
-    .wink::before {
-      content: "😉";
-      animation: swapWink 2s infinite;
-      display: inline-block;
-    }
-
-    @keyframes swapWink {
-      0%, 90%, 100% {
-        content: "😉";
-      }
-      95% {
-        content: "😐";
-      }
+    .result {
+      font-size: 1.2em;
+      padding: 20px;
+      max-width: 300px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -117,7 +95,7 @@
 
       if (!name) return alert("Please enter your name!");
 
-      // Show spinner immediately
+      // Spinner on
       button.disabled = true;
       button.classList.add("loading");
 
@@ -148,12 +126,12 @@
           const reminder = document.createElement('p');
           reminder.style.marginTop = '15px';
           reminder.style.fontWeight = 'bold';
-          reminder.innerHTML = `Don't forget to screenshot your result, just in case you forget your dress code <span class="wink"></span>`;
+          reminder.textContent = "Don't forget to screenshot your result 📸";
           resultBox.appendChild(reminder);
 
           resultBox.style.display = "block";
 
-          // Sound & confetti
+          // Play sound and confetti
           const sound = document.getElementById("popSound");
           sound.currentTime = 0;
           sound.play().catch(() => {});
@@ -164,7 +142,7 @@
             zIndex: 999
           });
 
-          // Reset button
+          // Reset button state
           button.classList.remove("loading");
           button.textContent = "Get My Prompt";
         })
